@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+</head>
+<body>
+<form id="tab" class="form-inline" role="form" action='/search/' method='GET' style="float:left;margin-top:48px;margin-left:0px;">
+        <!--<div class="panel-heading">-->
+        <div class="form-group">
+        <select class="form-control" name="Program" id="se_program">
+        <option value="test_program">请选择主类</option>
+        {% for val  in search %}
+            <option value="{{ val }}" {% if val == query %}selected{% endif %}>{{ val }}</option>
+        {% endfor %}
+        </select>
+        <select class="form-control" name="PlatForm" id="se_platform">
+        <option value="test_platform">请选择平台</option>
+        </select>
+        <select class="form-control" name="Platthing" id="se_thing">
+        <option value="test_platthing">请选择内容</option>
+        </select>
+        </div>
+         <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i>search</button>
+        <!--</div>-->
+        </form>
+<script type="application/javascript">
+  $(document).ready(function() {
+  $('#se_program').change(function () {
+      se_program = $('#se_program').val();
+      data = {se_program: se_program};
+      $.ajax({
+          url:"/liandong",
+          data:data,
+          type:'post',
+          success: function(platform) {
+              var platform = JSON.parse(platform);
+              $("#se_platform").empty();
+              $("#se_platform").append("<option value='test_platform'>" + "请选择平台p" + "</option>");
+              $.each(platform,function(i){
+                  $("#se_platform").append("<option " + "value＝\"" + platform[i] + "\">" + platform[i] + "</option>");
+                     })
+          }
+      })
+  })
+      $('#se_platform').change(function () {
+      se_program = $('#se_platform').val();
+      data = {se_program: se_program};
+      $.ajax({
+          url:"/liandong1",
+          data:data,
+          type:'post',
+          success: function(platform) {
+              var platform = JSON.parse(platform);
+              $("#se_platform").empty();
+              $("#se_platform").append("<option value='test_platform'>" + "请选择平台p" + "</option>");
+              $.each(platform,function(i){
+                  $("#se_platform").append("<option " + "value＝\"" + platform[i] + "\">" + platform[i] + "</option>");
+                     })
+          }
+      })
+  })
+  })
+</script>
+</body>
+</html>
